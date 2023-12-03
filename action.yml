@@ -1,0 +1,32 @@
+name: "Metric existence check"
+description: "Validate metric existence using python script quering against prometheus endpoint"
+branding:
+  color: blue
+  icon: check-circle
+
+inputs:
+  endpoint:
+    description: "Prometheus endpoint URL"
+    required: true
+  metric:
+    description: "Prometheus metric to check"
+    required: true
+  label:
+    description: "Label associated with the metric"
+    required: true
+  values:
+    description: "Comma seperated list of values to check against"
+    required: false
+
+outputs:
+  invalid_values:
+    description: "Values that were not present in the metric check"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    ENDPOINT: ${{ inputs.endpoint }}
+    METRIC: ${{ inputs.metric }}
+    LABEL: ${{ inputs.label }}
+    VALUES: ${{ inputs.values }}
