@@ -15,7 +15,13 @@ inputs:
     description: "Label associated with the metric"
     required: true
   values:
-    description: "Comma seperated list of values to check against"
+    description: "Comma seperated list of values to check against, provide either this of netbox_* variables"
+    required: false
+  netbox_endpoint:
+    description: "Netbox endpoint URL"
+    required: false
+  netbox_token:
+    description: "Netbox API token"
     required: false
 
 outputs:
@@ -26,7 +32,9 @@ runs:
   using: "docker"
   image: "Dockerfile"
   env:
-    ENDPOINT: ${{ inputs.endpoint }}
-    METRIC: ${{ inputs.metric }}
-    LABEL: ${{ inputs.label }}
-    VALUES: ${{ inputs.values }}
+    METRICSURE_ENDPOINT: ${{ inputs.endpoint }}
+    METRICSURE_METRIC: ${{ inputs.metric }}
+    METRICSURE_LABEL: ${{ inputs.label }}
+    METRICSURE_VALUES: ${{ inputs.values }}
+    METRICSURE_NETBOX_ENDPOINT: ${{ inputs.netbox_endpoint }}
+    METRICSURE_NETBOX_TOKEN: ${{ inputs.netbox_token }}

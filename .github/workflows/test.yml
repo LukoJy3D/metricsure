@@ -1,0 +1,24 @@
+name: Test metricsure
+
+on:
+  pull_request:
+
+jobs:
+  test-values:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run metricsure
+        id: metricsure
+        uses: ./
+        with:
+          endpoint: "https://prometheus.demo.do.prometheus.io"
+          metric: "prometheus_remote_storage_exemplars_in_total"
+          label: "instance"
+          values: "demo.do.prometheus.io:9100,demo.do.prometheus.io:9090"
+
+      - name: List all returned values
+        run: echo ${{ steps.metricsure.outputs.invalid_values }}
